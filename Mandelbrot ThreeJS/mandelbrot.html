@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mandelbrot set</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1px">
+  <style>
+    .maintext {
+      max-width: 550px;
+      text-align: justify;
+    }
+
+    .maintitle {
+      max-width: 550px;
+      text-align: left;
+    }
+
+    .js_link {
+      cursor: pointer;
+      color: #0000EE;
+    }
+  </style>
+  <script src="./js/three.r81.min.js"></script>
+  <script src="./js/prism_all.js"></script>
+  <link rel="stylesheet" href="./css/r_80s.css" />
+  <script type="text/javascript">
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-45658501-1', 'auto');
+      ga('send', 'pageview', window.location.pathname + window.location.search + window.location.hash);
+  </script>
+</head>
+<body>
+<a href="/">Home</a> &gt; <a href="/misc/">Misc</a> &gt; <a href="/misc/webgl/">WebGL</a>
+<hr>
+<div class="maintitle">
+  <h2>Shaders in three.js: plotting the Mandelbrot set</h2>
+</div>
+<div class="maintext">
+  <p>This is a tutorial on using custom shaders in <a href="https://threejs.org/">three.js</a>.  There are other tutorials on this subject, but this one is
+    mine.  Much more than for other programming topics, I found myself completely bewildered by the tutorials and had to study examples and try my own before
+    my brain latched on to the ideas.  So I don't know how useful this post will be, except to future-me, who'll have similar thinking patterns to present-
+    and recent-past-me.</p>
+
+  <p>The examples require WebGL, which most visitors here should have, but the Mandelbrot set should fail in IE.  (At least, a very similar case failed in
+    IE when I tested it.)</p>
+
+  <p>Let's look at the Mandelbrot set: the set of complex numbers <i>c</i> for which the sequence defined by <i>z</i><sub>0</sub> = 0 and
+    <i>z</i><sub><i>n</i>+1</sub> = <i>z</i><sub><i>n</i></sub><sup>2</sup> + c remains bounded; click to zoom.  You won't be able to zoom too far and maintain good resolution &ndash; you can increase the
+    number of iterations but not past 2<sup>16</sup>.  <b>You might crash your graphics card if you set the iterations too high and zoom on a dark area</b>,
+    though for me it recovered after a second or two.  On the one hand, this is disappointing.  On the other, it's useful to know that you can't do
+    calculations that are too intense in the shaders.  Consider yourselves warned, anyway.</p>
+
+  <p>Iterations: <input type="text" id="text_iter" size="6" value="100"> <button onclick="update_iterations()">Update</button>
+    <br>Re(z): <span id="span_z_r_min"></span>, <span id="span_z_r_max"></span>
+    <br>Im(z): <span id="span_z_i_min"></span>, <span id="span_z_i_max"></span>
+    <br>Length: <span id="span_length"></span>
+    <br><span class="js_link" onclick="zoom_out()">Zoom out</span>, <span class="js_link" onclick="reset_zoom()">Reset</span>.
+  </p>
+  <div id="div_plot_area"></div>
+
+  <script type="x-shader/x-vertex" id="shader_vertex">
+    attribute float vertex_z_r;
+    attribute float vertex_z_i;
+
+    // varyings get passed to the fragment shader.
+    varying float c_r;
+    varying float c_i;
+
+    void main() {
+      // Say what the varying values are.
+      c_r = vertex_z_r;
+      c_i = vertex_z_i;
+
+      // Have to say what the position is:
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  </script>
+
+  <script type="x-shader/x-fragment" id="shader_fragment">
+    // Varyings get declared in both vertex and fragment shaders:
+    varying float c_r;
+    varying float c_i;
+
+    uniform int max_iterations;
+
+    // Defining the lower and upper ends of the colour scale:
+    #define r_min 0.0
+    #define r_max 1.0
+
+    #define g_min 0.0
+    #define g_max 1.0
+
+    #define b_min 0.35
+    #define b_max 0.0
+
+    void main() {
+      float r;
+      float g;
+      float b;
+      float t;
+      float w_r;
+      float w_i;
+      float u;
+      float v;
+
+      w_r = 0.0;
+      w_i = 0.0;
+
+      // Colour will be black if it stays converged:
+      r = 0.0;
+      g = 0.0;
+      b = 0.0;
+
+      for (int i = 0; i < 65536; i++) {
+        u = w_r;
+        v = w_i;
+
+        w_r = u*u - v*v + c_r;
+        w_i = 2.0*u*v + c_i;
+
+        if (w_r*w_r + w_i*w_i > 4.0) {
+          // Diverged: make a pretty colour.
+          t = log(float(i + 1)) / log(float(max_iterations + 1));
+
+          r = t*r_max + (1.0 - t)*r_min;
+          g = t*g_max + (1.0 - t)*g_min;
+          b = t*b_max + (1.0 - t)*b_min;
+
+          break;
+        }
+
+        if (i >= max_iterations) {
+          break;
+        }
+      }
+
+      gl_FragColor = vec4(r, g, b, 1.0);
+    }
+  </script>
+
+
+  <script type="text/javascript">
+      function update_iterations() {
+          var text_elt = document.getElementById("text_iter");
+          var iter = parseInt(text_elt.value);
+          if (iter < 1) { iter = 1; }
+          if (iter > 65536) { iter = 65536; }
+          if (isNaN(iter)) { iter = 100; }
+
+          text_elt.value = iter;
+
+          plot_things.material.uniforms.max_iterations.value = iter;
+          plot_things.renderer.render(plot_things.scene, plot_things.camera);
+      }
+
+      function print_coords() {
+          var z_r = plot_things.quad.geometry.attributes.vertex_z_r.array;
+          var z_i = plot_things.quad.geometry.attributes.vertex_z_i.array;
+
+          document.getElementById("span_z_r_min").innerHTML = z_r[0];
+          document.getElementById("span_z_r_max").innerHTML = z_r[1];
+
+          document.getElementById("span_z_i_min").innerHTML = z_i[0];
+          document.getElementById("span_z_i_max").innerHTML = z_i[1];
+
+          var range = z_r[1] - z_r[0];
+
+          var pow10 = Math.floor(Math.log(range) / 2.302585093);
+          var dec_places = -pow10 + 2;
+
+          document.getElementById("span_length").innerHTML = range.toFixed(dec_places);
+      }
+
+      function set_plot_bounds(mid_z_r, mid_z_i, range) {
+          // "range" is the half-width of the square in the complex
+          // plane to be plotted.
+
+          var z_r = plot_things.quad.geometry.attributes.vertex_z_r.array;
+          var z_i = plot_things.quad.geometry.attributes.vertex_z_i.array;
+
+          // First triangle:
+          z_r[0] = mid_z_r - range;
+          z_i[0] = mid_z_i - range;
+
+          z_r[1] = mid_z_r + range;
+          z_i[1] = mid_z_i + range;
+
+          z_r[2] = mid_z_r - range;
+          z_i[2] = mid_z_i + range;
+
+          // Second triangle:
+          z_r[3] = mid_z_r - range;
+          z_i[3] = mid_z_i - range;
+
+          z_r[4] = mid_z_r + range;
+          z_i[4] = mid_z_i + range;
+
+          z_r[5] = mid_z_r + range;
+          z_i[5] = mid_z_i - range;
+
+          plot_things.quad.geometry.attributes.vertex_z_r.needsUpdate = true;
+          plot_things.quad.geometry.attributes.vertex_z_i.needsUpdate = true;
+
+          plot_things.renderer.render(plot_things.scene, plot_things.camera);
+          print_coords();
+      }
+
+      function zoom_plot(x, y) {
+          // x, y: clientX, clientY.
+
+          var bounding_rect = plot_things.renderer.domElement.getBoundingClientRect();
+
+          x = (x - bounding_rect.left) / (bounding_rect.right - bounding_rect.left);
+          y = (y - bounding_rect.top) / (bounding_rect.bottom - bounding_rect.top);
+
+          var z_r = plot_things.quad.geometry.attributes.vertex_z_r.array;
+          var z_i = plot_things.quad.geometry.attributes.vertex_z_i.array;
+
+          var range = 0.25*(z_r[1] - z_r[0]);
+
+          var new_mid_z_r = z_r[0] + x*(z_r[1] - z_r[0]) + 2*range*(0.5 - x);
+          var new_mid_z_i = z_i[1] + y*(z_i[0] - z_i[1]) + 2*range*(y - 0.5);
+
+          set_plot_bounds(new_mid_z_r, new_mid_z_i, range);
+      }
+
+      function zoom_out() {
+          var z_r = plot_things.quad.geometry.attributes.vertex_z_r.array;
+          var z_i = plot_things.quad.geometry.attributes.vertex_z_i.array;
+
+          var range = z_r[1] - z_r[0];
+
+          var mid_z_r = 0.5*(z_r[0] + z_r[1]);
+          var mid_z_i = 0.5*(z_i[0] + z_i[1]);
+
+          set_plot_bounds(mid_z_r, mid_z_i, range);
+      }
+
+      function reset_zoom() {
+          set_plot_bounds(plot_things.init_mid_z_r, plot_things.init_mid_z_i, plot_things.init_range);
+      }
+
+      function touch_start_fn(event) {
+          if (event.touches.length === 1) {
+              event.preventDefault();
+              zoom_plot(event.touches[0].clientX, event.touches[0].clientY);
+          }
+      }
+
+      function mouse_down_fn(event) {
+          if (event.button === 0) {
+              event.preventDefault();
+              zoom_plot(event.clientX, event.clientY);
+          }
+      }
+
+      function init_plot() {
+          plot_things.div_id = "div_plot_area";
+          plot_things.scene = new THREE.Scene();
+          plot_things.renderer = new THREE.WebGLRenderer({"antialias": true});
+
+          // Make the plot the largest square that fits in the window and container div:
+          var width = Math.min(document.getElementById(plot_things.div_id).offsetWidth, window.innerHeight);
+          var height = width;
+          plot_things.renderer.setSize(width, height);
+
+          document.getElementById(plot_things.div_id).appendChild(plot_things.renderer.domElement);
+
+          plot_things.camera = new THREE.OrthographicCamera(
+              -1, 1, 1, -1, 0.01, 100);
+
+          plot_things.camera.position.z = 1;
+
+          plot_things.material = new THREE.ShaderMaterial({
+              "uniforms": {"max_iterations": {"type": "i", "value": 100}},
+              "vertexShader":   document.getElementById("shader_vertex").textContent,
+              "fragmentShader": document.getElementById("shader_fragment").textContent,
+              "side": THREE.DoubleSide
+          });
+
+          plot_things.geometry = new THREE.BufferGeometry();
+
+          var z_r = new Float32Array(6);
+          var z_i = new Float32Array(6);
+          var vertices = new Float32Array(18);
+
+          // vertices hold x-, y-, z-coordinates in world space.
+          // z_r and z_i are the real and imaginary components of
+          // the points the vertices represent in the complex
+          // plane that will hold the fractal.
+
+          // First triangle:
+          vertices[0]  = -1.0;
+          vertices[1]  = -1.0;
+          vertices[2]  =  0.0;
+
+          vertices[3]  =  1.0;
+          vertices[4]  =  1.0;
+          vertices[5]  =  0.0;
+
+          vertices[6]  = -1.0;
+          vertices[7]  =  1.0;
+          vertices[8]  =  0.0;
+
+          // Second triangle.
+          vertices[9]  = -1.0;
+          vertices[10] = -1.0;
+          vertices[11] =  0.0;
+
+          vertices[12] =  1.0;
+          vertices[13] =  1.0;
+          vertices[14] =  0.0;
+
+          vertices[15] =  1.0;
+          vertices[16] = -1.0;
+          vertices[17] =  0.0;
+
+          plot_things.geometry.addAttribute("position", new THREE.BufferAttribute(vertices, 3));
+          plot_things.geometry.addAttribute("vertex_z_r", new THREE.BufferAttribute(z_r, 1));
+          plot_things.geometry.addAttribute("vertex_z_i", new THREE.BufferAttribute(z_i, 1));
+
+
+          plot_things.quad = new THREE.Mesh(
+              plot_things.geometry,
+              plot_things.material
+          );
+
+
+          plot_things.scene.add(plot_things.quad);
+
+          plot_things.init_mid_z_r = -0.5;
+          plot_things.init_mid_z_i = 0;
+
+          // I'm defining the range as half the length of the current view.
+          plot_things.init_range = 2;
+          set_plot_bounds(plot_things.init_mid_z_r, plot_things.init_mid_z_i, plot_things.init_range);
+
+          plot_things.renderer.domElement.addEventListener("mousedown", mouse_down_fn);
+          plot_things.renderer.domElement.addEventListener("touchstart", touch_start_fn);
+      }
+
+      var plot_things = {};
+
+      init_plot();
+  </script>
+
+  <p>It's pretty quick!  (At least on my laptop.)  This is the wonder of using the GPU to do grunt work &ndash; since each pixel in the Mandelbrot set
+    is calculated independently of the others, plotting it is a problem that benefits enormously from parallelisation, which is what the GPU provides.</p>
+
+  <p>So, how does it work?  I'm using <a href="https://threejs.org/">three.js</a> (r81) as my interface to WebGL, and some of what I write will be
+    specific to it, and some of it will be more general.  I'll start by only making minor nods to three.js processes, before going into the code later.</p>
+
+  <p>The basic idea of three.js is that you define objects in a three-dimensional space, along with a camera.  A fractal isn't the natural use case for
+    three.js, since I'm just plotting on a flat plane, but hey, it works.  You just make a square whose vertices have z-coordinates of zero, put an
+    orthographic camera above it, then colour the square with the Mandelbrot set.</p>
+
+  <p>So let's think about the square (everything I write will also apply to quadrilaterals more generally).  Any <i>mesh</i> in the scene is made up
+    of triangles.  You can tell three.js to make a beautifully textured sphere, but it won't be a perfect sphere &ndash; it will be made of hundreds of
+    triangles, hopefully all small enough that the curves look smooth on the screen.  A square is made up of two triangles, the two triangles sharing
+    two vertices in common.</p>
+
+  <p>So to make a square, we'll need to define six vertices, and put them into a <i>geometry</i>; three.js will automatically interpret a set of
+    six vertices as two triangles.  The vertex locations can be chosen freely &ndash; we'll be defining the complex plane for the Mandelbrot set later
+    &ndash; so I will make the easy choice of <code>{[-1, -1, 0], [1, 1, 0], [-1, 1, 0]}</code> for the first triangle and
+    <code>{[-1, -1, 0], [1, 1, 0], [1, -1, 0]}</code> for the second triangle.</p>
+
+  <p>When working with shaders, we're able to assign <i>attributes</i> to each vertex independently, and access these values in the <i>vertex shader</i>,
+    which is a piece of code that runs on all the vertices.  But all the action takes place inside the triangles &ndash; inside each <i>fragment</i>, as
+    they're called.  When writing the <i>fragment shader</i>, we'll need to know what coordinate (in the complex plane) we're testing.</p>
+
+  <p>The key is as follows.  The vertex shader always runs first, and you can pass variables from the vertex shader onto the fragment shader.  A fragment
+    has three vertices defining it, so what happens when you "pass" three variables to it and only have one variable name to hold these values in the
+    fragment shader?  The answer is that as the fragment shader works its way through all the relevant pixels, <i>it automatically linearly interpolates
+      between the variables passed from its vertices</i>, based on how far the current pixel is from each vertex.</p>
+
+  <p>So, for example, if each vertex gets assigned a different colour, then the fragment will be coloured by smooth interpolation:</p>
+
+  <div id="div_interpolation_example"></div>
+
+  <script type="x-shader/x-vertex" id="shader_vertex_interp">
+    attribute vec3 col;
+
+    // varyings get passed to the fragment shader.
+    varying vec3 color;
+
+    void main() {
+      color = col;
+
+      // Have to say what the position is:
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  </script>
+
+  <script type="x-shader/x-vertex" id="shader_fragment_interp">
+    // Varyings get declared in both vertex and fragment shaders:
+    varying vec3 color;
+
+    void main() {
+      gl_FragColor = vec4(color.x, color.y, color.z, 1.0);
+    }
+  </script>
+
+  <script type="text/javascript">
+      function make_interpolation_example() {
+          var div_id = "div_interpolation_example";
+          var scene = new THREE.Scene();
+          var renderer = new THREE.WebGLRenderer({"antialias": true});
+
+          // Make the plot the largest square that fits in the window and container div:
+          var width = Math.min(document.getElementById(plot_things.div_id).offsetWidth, window.innerHeight);
+          var height = width;
+          renderer.setSize(width, height);
+
+          document.getElementById(div_id).appendChild(renderer.domElement);
+
+          camera = new THREE.OrthographicCamera(
+              -1.1, 1.1, 1.1, -1.1, 0.01, 100);
+
+          camera.position.z = 1;
+
+          material = new THREE.ShaderMaterial({
+              "vertexShader":   document.getElementById("shader_vertex_interp").textContent,
+              "fragmentShader": document.getElementById("shader_fragment_interp").textContent,
+              "side": THREE.DoubleSide
+          });
+
+          geometry = new THREE.BufferGeometry();
+
+          var colors = new Float32Array(9);
+          var vertices = new Float32Array(9);
+
+          // Make an equilateral triangle:
+          vertices[0] =  0.0;
+          vertices[1] =  -Math.sqrt(3) / 2;
+          vertices[2] =  0.0;
+
+          vertices[3] =  1.0;
+          vertices[4] =  Math.sqrt(3) / 2;
+          vertices[5] =  0.0;
+
+          vertices[6] = -1.0;
+          vertices[7] =  Math.sqrt(3) / 2;
+          vertices[8] =  0.0;
+
+          colors[0] = 27/255;
+          colors[1] = 158/255;
+          colors[2] = 119/255;
+
+          colors[3] = 217/255;
+          colors[4] = 95/255;
+          colors[5] = 2/255;
+
+          colors[6] = 117/255;
+          colors[7] = 112/255;
+          colors[8] = 179/255;
+
+          geometry.addAttribute("position", new THREE.BufferAttribute(vertices, 3));
+          geometry.addAttribute("col", new THREE.BufferAttribute(colors, 3));
+
+          var triangle = new THREE.Mesh(
+              geometry,
+              material
+          );
+
+          scene.add(triangle);
+
+          renderer.render(scene, camera);
+      }
+
+      make_interpolation_example();
+  </script>
+
+  <p>This means that we can make a Mandelbrot set!  We just have to assign two attributes to each vertex: the real and imaginary components of
+    the complex number that we want the vertex to represent.  They will then define a square in the complex plane, and when the fragment shader runs, it
+    will have access to the complex number that it's testing for inclusion in the Mandelbrot set, and it can do its calculations on it.</p>
+
+  <p>Passing variables from the vertex shader to the fragment shader is both unintuitive and easy: you declare a <code>varying</code> in both shaders,
+    each of the same type and with the same name.</p>
+
+  <p>Let's assume that we know how to pass attributes from three.js into the vertex shader, and see how the shaders work.  They're written in GLSL, which
+    looks a lot like C, and you'll need to remember to type the decimal point when putting numbers into floats.  The vertex shader runs first, and in this
+    case it is quite short.  The attributes (defined in the JavaScript) get declared, the varyings, are also declared, and then a short
+    <code>void main()</code> runs.  Inside <code>main()</code>, the values of the varyings get set to the values of the attributes, and then the position of
+    the vertex is calculated (by a copy-paste job from other examples).</p>
+
+  <p>The variable <code>position</code> doesn't appear to be declared, because three.js automatically declares it (along with a whole host of other
+    variables); this makes the code easier to write and more mysterious to understand.  The <code>vec4</code> indicates that it's creating a vector of
+    4 floats; <code>position</code> is defined as a <code>vec3</code>, and I don't know what the fourth entry in the <code>vec4</code> represents.</p>
+</div>
+
+<div class="forcode">
+<pre class="language-clike">
+<code>/* The vertex shader for the Mandelbrot set plotter */
+
+// The real and imaginary components of the
+// complex number this vertex represents; must
+// be set in the JavaScript.
+attribute float vertex_z_r;
+attribute float vertex_z_i;
+
+// varyings get passed to the fragment shader; these
+// will be the same as the attributes but the names
+// needs to be different:
+varying float c_r;
+varying float c_i;
+
+void main() {
+  // Say what the varying values are.
+  c_r = vertex_z_r;
+  c_i = vertex_z_i;
+  
+  // Have to say what the position is:
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}</code></pre>
+</div>
+
+<div class="maintext">
+  <p>Next comes the fragment shader.  The two varyings are declared, giving us the complex number to be tested, as is a <code>uniform</code> &ndash;
+    like an attribute but holds the same value across all vertices (like attributes, they are set in the JavaScript).  Half of the rest of the code is then
+    preparing a blue-yellow colour scale.  An unexpected aspect of GLSL is that in a for loop, you can't compare the looping variable to a non-constant.
+    Since I want the user to set the maximum number of iterations, that means breaking the loop in an if block.</p>
+
+  <p>The end of the shader routine is defining the colour in a <code>vec4</code> &ndash; red, green, blue, and alpha components.</p>
+</div>
+
+<div class="forcode">
+<pre class="language-clike">
+<code>/* The fragment shader for the Mandelbrot set plotter */
+
+// Varyings get declared in both vertex and fragment shaders:
+varying float c_r;
+varying float c_i;
+
+// uniforms are defined in the JavaScript:
+uniform int max_iterations;
+
+// Defining the lower and upper ends of the colour scale:
+#define r_min 0.0
+#define r_max 1.0
+
+#define g_min 0.0
+#define g_max 1.0
+
+#define b_min 0.35
+#define b_max 0.0
+
+void main() {
+  float r;
+  float g;
+  float b;
+  float t;
+  float w_r;
+  float w_i;
+  float u;
+  float v;
+  
+  // Initial value in the w --> w^2 + c:
+  w_r = 0.0;
+  w_i = 0.0;
+  
+  // Colour will be black if it stays converged:
+  r = 0.0;
+  g = 0.0;
+  b = 0.0;
+  
+  // The looping variable can't be compared to a non-constant,
+  // so to allow the user to change the maximum number of
+  // iterations, I break manually.
+  for (int i = 0; i &lt; 65536; i++) {
+    // The fractal calculation:
+    u = w_r;
+    v = w_i;
+    
+    w_r = u*u - v*v + c_r;
+    w_i = 2.0*u*v + c_i;
+    
+    if (w_r*w_r + w_i*w_i > 4.0) {
+      // Diverged: make a pretty colour.
+      t = log(float(i + 1)) / log(float(max_iterations + 1));
+      
+      r = t*r_max + (1.0 - t)*r_min;
+      g = t*g_max + (1.0 - t)*g_min;
+      b = t*b_max + (1.0 - t)*b_min;
+      
+      break;
+    }
+    
+    if (i >= max_iterations) {
+      break;
+    }
+  }
+  
+  // Set the colour:
+  gl_FragColor = vec4(r, g, b, 1.0);
+}</code></pre>
+</div>
+
+<div class="maintext">
+  <p>Now that the shaders are written, how do we use them?  In three.js, every mesh comprises a geometry (which holds the vertices) and a material;
+    the shaders and any uniforms get attached to the material.  Each shader function must be in a single string, and for this page (following others'
+    examples) I've typed them into <code>&lt;script&gt;</code> elements with weird <code>type</code>s so that the browser ignores them, and then
+    in the JavaScript I grab the <code>.textContent</code>.  It looks a bit like this:</p></div>
+
+<div class="forcode">
+<pre class="language-javascript">
+<code>var material = new THREE.ShaderMaterial({
+  "uniforms": {"max_iterations": {"type": "i", "value": 100}},
+  "vertexShader":   document.getElementById("shader_vertex").textContent,
+  "fragmentShader": document.getElementById("shader_fragment").textContent,
+  "side": THREE.DoubleSide
+});</code></pre>
+</div>
+
+<div class="maintext">
+  <p>The argument of <code>THREE.ShaderMaterial()</code> is an object, with properties as shown above (the <code>side</code> property is set to
+    <code>THREE.DoubleSide</code> so that I don't have to worry about getting the order of the vertices correct).  The uniforms are defined in their own
+    object, one object per uniform, and each uniform is defined in an object, containing properties <code>type</code> (the <code>"i"</code> means that
+    the uniform is an integer) and <code>value</code>.</p>
+
+  <p>Since attributes are defined for each vertex, they get attached to the geometry of the mesh.  The geometry must be a
+    <code>THREE.BufferGeometry()</code>, not a regular <code>THREE.Geometry()</code>.  One-dimensional arrays of the appropriate size are defined
+    &ndash; 3 times the number of vertices for positions &ndash; and then get put in a <code>THREE.BufferAttribute</code> which itself is added to
+    the geometry by calling <code>.addAttribute()</code>.  I found it easy to make mistakes getting all this straight.</p></div>
+
+<div class="forcode">
+<pre class="language-javascript">
+<code>var geometry = new THREE.BufferGeometry();
+
+var z_r = new Float32Array(6);
+var z_i = new Float32Array(6);
+var vertices = new Float32Array(18);
+
+// vertices hold x-, y-, z-coordinates in world space.
+// z_r and z_i are the real and imaginary components of
+// the points the vertices represent in the complex
+// plane that will hold the fractal.
+
+// First triangle:
+vertices[0]  = -1.0;
+vertices[1]  = -1.0;
+vertices[2]  =  0.0;
+
+vertices[3]  =  1.0;
+vertices[4]  =  1.0;
+vertices[5]  =  0.0;
+
+vertices[6]  = -1.0;
+vertices[7]  =  1.0;
+vertices[8]  =  0.0;
+
+// Second triangle:
+vertices[9]  = -1.0;
+vertices[10] = -1.0;
+vertices[11] =  0.0;
+
+vertices[12] =  1.0;
+vertices[13] =  1.0;
+vertices[14] =  0.0;
+
+vertices[15] =  1.0;
+vertices[16] = -1.0;
+vertices[17] =  0.0;
+
+// The second argument in THREE.BufferAttribute() is how many entries in the
+// array belong to each vertex.
+geometry.addAttribute("position", new THREE.BufferAttribute(vertices, 3));
+geometry.addAttribute("vertex_z_r", new THREE.BufferAttribute(z_r, 1));
+geometry.addAttribute("vertex_z_i", new THREE.BufferAttribute(z_i, 1));
+
+// Make the mesh!
+var the_rectangle = new THREE.Mesh(geometry, material);</code></pre>
+</div>
+
+<div class="maintext">
+  <p>That code omitted setting the values of the <code>vertex_z_r</code> and <code>vertex_z_i</code> attributes.  I farmed them out to another function,
+    and writing it separately here is instructive because it also shows how to update an attribute: you make a shallow copy of the array, edit the
+    shallow copy, then set the <code>needsUpdate</code> property to <code>true</code>.</p></div>
+
+<div class="forcode">
+<pre class="language-javascript">
+<code>function set_plot_bounds(mid_z_r, mid_z_i, range) {
+  // mid_z_r, mid_z_i: coords at the middle of the desired
+  // square in the complex plane.
+  //
+  // range: the half-width of the square
+  
+  // Make a shallow copy of the attribute arrays:
+  var z_r = the_rectangle.geometry.attributes.vertex_z_r.array;
+  var z_i = the_rectangle.geometry.attributes.vertex_z_i.array;
+  
+  // First triangle:
+  z_r[0] = mid_z_r - range;
+  z_i[0] = mid_z_i - range;
+  
+  z_r[1] = mid_z_r + range;
+  z_i[1] = mid_z_i + range;
+  
+  z_r[2] = mid_z_r - range;
+  z_i[2] = mid_z_i + range;
+  
+  // Second triangle:
+  z_r[3] = mid_z_r - range;
+  z_i[3] = mid_z_i - range;
+  
+  z_r[4] = mid_z_r + range;
+  z_i[4] = mid_z_i + range;
+  
+  z_r[5] = mid_z_r + range;
+  z_i[5] = mid_z_i - range;
+  
+  // Have to tell the shader to re-read the attributes:
+  the_rectangle.geometry.attributes.vertex_z_r.needsUpdate = true;
+  the_rectangle.geometry.attributes.vertex_z_i.needsUpdate = true;
+  
+  // I haven't defined any of this in the exceprts, but it's all
+  // standard three.js:
+  renderer.render(scene, camera);
+}</code></pre>
+</div>
+
+<div class="maintext">
+  <p>Full details in the source to this page, where variable names are a little different.</p>
+
+  <p><i>Posted 2016-10-05.</i></p>
+</div>
+<hr>
+<a href="/">Home</a> &gt; <a href="/misc/">Misc</a> &gt; <a href="/misc/webgl/">WebGL</a>
+</body>
+</html>
