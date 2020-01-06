@@ -24,7 +24,7 @@ function AddEvent(object, type, callback) {
     } else {
         object["on"+type] = callback;
     }
-};
+}
 
 function RemoveEvent(object, type, callback) {
     if (object == null || typeof(object) == 'undefined') return;
@@ -35,7 +35,7 @@ function RemoveEvent(object, type, callback) {
     } else {
         object["on"+type] = callback;
     }
-};
+}
 
 function Init() {
 	async.map({
@@ -125,7 +125,7 @@ function RunDemo(loadErrors, loadedShaders) {
 		-1, 1,
 		-1, -1,
 		1, -1,
-		
+
 		-1, 1,
 		1, 1,
 		1, -1
@@ -164,7 +164,7 @@ function RunDemo(loadErrors, loadedShaders) {
 			document.title = 1000 / average + ' fps';
 		}
 		frames = frames.slice(0, 250);
-		 
+
 		// Draw
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
