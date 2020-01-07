@@ -221,7 +221,8 @@
           var z_r = plot_things.quad.geometry.attributes.vertex_z_r.array;
           var z_i = plot_things.quad.geometry.attributes.vertex_z_i.array;
 
-          var range = 0.25*(z_r[1] - z_r[0]);
+          // 0.5 * (z_r[1] - z_r[0]) 是上一次的 range
+          var range = 0.8 * 0.5 * (z_r[1] - z_r[0]);
 
           var new_mid_z_r = z_r[0] + x*(z_r[1] - z_r[0]) + 2*range*(0.5 - x);
           var new_mid_z_i = z_i[1] + y*(z_i[0] - z_i[1]) + 2*range*(y - 0.5);
@@ -513,7 +514,7 @@ void main() {
   // Say what the varying values are.
   c_r = vertex_z_r;
   c_i = vertex_z_i;
-  
+
   // Have to say what the position is:
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }</code></pre>
@@ -558,16 +559,16 @@ void main() {
   float w_i;
   float u;
   float v;
-  
+
   // Initial value in the w --> w^2 + c:
   w_r = 0.0;
   w_i = 0.0;
-  
+
   // Colour will be black if it stays converged:
   r = 0.0;
   g = 0.0;
   b = 0.0;
-  
+
   // The looping variable can't be compared to a non-constant,
   // so to allow the user to change the maximum number of
   // iterations, I break manually.
@@ -575,26 +576,26 @@ void main() {
     // The fractal calculation:
     u = w_r;
     v = w_i;
-    
+
     w_r = u*u - v*v + c_r;
     w_i = 2.0*u*v + c_i;
-    
+
     if (w_r*w_r + w_i*w_i > 4.0) {
       // Diverged: make a pretty colour.
       t = log(float(i + 1)) / log(float(max_iterations + 1));
-      
+
       r = t*r_max + (1.0 - t)*r_min;
       g = t*g_max + (1.0 - t)*g_min;
       b = t*b_max + (1.0 - t)*b_min;
-      
+
       break;
     }
-    
+
     if (i >= max_iterations) {
       break;
     }
   }
-  
+
   // Set the colour:
   gl_FragColor = vec4(r, g, b, 1.0);
 }</code></pre>
@@ -688,35 +689,35 @@ var the_rectangle = new THREE.Mesh(geometry, material);</code></pre>
   // square in the complex plane.
   //
   // range: the half-width of the square
-  
+
   // Make a shallow copy of the attribute arrays:
   var z_r = the_rectangle.geometry.attributes.vertex_z_r.array;
   var z_i = the_rectangle.geometry.attributes.vertex_z_i.array;
-  
+
   // First triangle:
   z_r[0] = mid_z_r - range;
   z_i[0] = mid_z_i - range;
-  
+
   z_r[1] = mid_z_r + range;
   z_i[1] = mid_z_i + range;
-  
+
   z_r[2] = mid_z_r - range;
   z_i[2] = mid_z_i + range;
-  
+
   // Second triangle:
   z_r[3] = mid_z_r - range;
   z_i[3] = mid_z_i - range;
-  
+
   z_r[4] = mid_z_r + range;
   z_i[4] = mid_z_i + range;
-  
+
   z_r[5] = mid_z_r + range;
   z_i[5] = mid_z_i - range;
-  
+
   // Have to tell the shader to re-read the attributes:
   the_rectangle.geometry.attributes.vertex_z_r.needsUpdate = true;
   the_rectangle.geometry.attributes.vertex_z_i.needsUpdate = true;
-  
+
   // I haven't defined any of this in the exceprts, but it's all
   // standard three.js:
   renderer.render(scene, camera);
