@@ -1,10 +1,31 @@
 // Three.js - Custom BufferGeometry - TypedArrays
 // from https://threejsfundamentals.org/threejs/threejs-custom-buffergeometry-cube-typedarrays.html
 
-
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r112/build/three.module.js';
 
+function loadShaderAsync(shaderURL, callback) {
+    var req = new XMLHttpRequest();
+    req.open('GET', shaderURL, true);
+    req.onload = function () {
+        if (req.status < 200 || req.status >= 300) {
+            callback('Could not load ' + shaderURL);
+        } else {
+            callback(null, req.responseText);
+        }
+    };
+    req.send();
+}
+
 function main() {
+    // 加载渲染器文件
+    async.map({
+        mandfsText: "/shader/mand.fs.glsl",
+        mandvsText: "/shader/mand.vs.glsl"
+    }, loadShaderAsync, loadExec)
+}
+
+function loadExec(loadErrors, loadedShaders) {
+    console.log(loadedShaders);
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({canvas});
 
@@ -29,51 +50,56 @@ function main() {
     // Only trying to make it clear most vertices are unique
     const vertices = [
         // front
-        { pos: [-1, -1,  1], norm: [ 0,  0,  1], uv: [0, 1], }, // 0
-        { pos: [ 1, -1,  1], norm: [ 0,  0,  1], uv: [1, 1], }, // 1
-        { pos: [-1,  1,  1], norm: [ 0,  0,  1], uv: [0, 0], }, // 2
-        { pos: [ 1,  1,  1], norm: [ 0,  0,  1], uv: [1, 0], }, // 3
+        { pos: [-1, -1,  1], norm: [ 0,  0,  1], uv: [0, 1], color: [1.0, 1.0, 0.0], }, // 0
+        { pos: [ 1, -1,  1], norm: [ 0,  0,  1], uv: [1, 1], color: [0.7, 0.0, 1.0], }, // 1
+        { pos: [-1,  1,  1], norm: [ 0,  0,  1], uv: [0, 0], color: [0.1, 1.0, 0.6], }, // 2
+        { pos: [ 1,  1,  1], norm: [ 0,  0,  1], uv: [1, 0], color: [1.0, 1.0, 0.0], }, // 3
         // right
-        { pos: [ 1, -1,  1], norm: [ 1,  0,  0], uv: [0, 1], }, // 4
-        { pos: [ 1, -1, -1], norm: [ 1,  0,  0], uv: [1, 1], }, // 5
-        { pos: [ 1,  1,  1], norm: [ 1,  0,  0], uv: [0, 0], }, // 6
-        { pos: [ 1,  1, -1], norm: [ 1,  0,  0], uv: [1, 0], }, // 7
+        { pos: [ 1, -1,  1], norm: [ 1,  0,  0], uv: [0, 1], color: [1.0, 1.0, 0.0], }, // 4
+        { pos: [ 1, -1, -1], norm: [ 1,  0,  0], uv: [1, 1], color: [0.7, 0.0, 1.0], }, // 5
+        { pos: [ 1,  1,  1], norm: [ 1,  0,  0], uv: [0, 0], color: [0.1, 1.0, 0.6], }, // 6
+        { pos: [ 1,  1, -1], norm: [ 1,  0,  0], uv: [1, 0], color: [1.0, 1.0, 0.0], }, // 7
         // back
-        { pos: [ 1, -1, -1], norm: [ 0,  0, -1], uv: [0, 1], }, // 8
-        { pos: [-1, -1, -1], norm: [ 0,  0, -1], uv: [1, 1], }, // 9
-        { pos: [ 1,  1, -1], norm: [ 0,  0, -1], uv: [0, 0], }, // 10
-        { pos: [-1,  1, -1], norm: [ 0,  0, -1], uv: [1, 0], }, // 11
+        { pos: [ 1, -1, -1], norm: [ 0,  0, -1], uv: [0, 1], color: [1.0, 1.0, 0.0], }, // 8
+        { pos: [-1, -1, -1], norm: [ 0,  0, -1], uv: [1, 1], color: [0.7, 0.0, 1.0], }, // 9
+        { pos: [ 1,  1, -1], norm: [ 0,  0, -1], uv: [0, 0], color: [0.1, 1.0, 0.6], }, // 10
+        { pos: [-1,  1, -1], norm: [ 0,  0, -1], uv: [1, 0], color: [1.0, 1.0, 0.0], }, // 11
         // left
-        { pos: [-1, -1, -1], norm: [-1,  0,  0], uv: [0, 1], }, // 12
-        { pos: [-1, -1,  1], norm: [-1,  0,  0], uv: [1, 1], }, // 13
-        { pos: [-1,  1, -1], norm: [-1,  0,  0], uv: [0, 0], }, // 14
-        { pos: [-1,  1,  1], norm: [-1,  0,  0], uv: [1, 0], }, // 15
+        { pos: [-1, -1, -1], norm: [-1,  0,  0], uv: [0, 1], color: [1.0, 1.0, 0.0], }, // 12
+        { pos: [-1, -1,  1], norm: [-1,  0,  0], uv: [1, 1], color: [0.7, 0.0, 1.0], }, // 13
+        { pos: [-1,  1, -1], norm: [-1,  0,  0], uv: [0, 0], color: [0.1, 1.0, 0.6], }, // 14
+        { pos: [-1,  1,  1], norm: [-1,  0,  0], uv: [1, 0], color: [1.0, 1.0, 0.0], }, // 15
         // top
-        { pos: [ 1,  1, -1], norm: [ 0,  1,  0], uv: [0, 1], }, // 16
-        { pos: [-1,  1, -1], norm: [ 0,  1,  0], uv: [1, 1], }, // 17
-        { pos: [ 1,  1,  1], norm: [ 0,  1,  0], uv: [0, 0], }, // 18
-        { pos: [-1,  1,  1], norm: [ 0,  1,  0], uv: [1, 0], }, // 19
+        { pos: [ 1,  1, -1], norm: [ 0,  1,  0], uv: [0, 1], color: [1.0, 1.0, 0.0], }, // 16
+        { pos: [-1,  1, -1], norm: [ 0,  1,  0], uv: [1, 1], color: [0.7, 0.0, 1.0], }, // 17
+        { pos: [ 1,  1,  1], norm: [ 0,  1,  0], uv: [0, 0], color: [0.1, 1.0, 0.6], }, // 18
+        { pos: [-1,  1,  1], norm: [ 0,  1,  0], uv: [1, 0], color: [1.0, 1.0, 0.0], }, // 19
         // bottom
-        { pos: [ 1, -1,  1], norm: [ 0, -1,  0], uv: [0, 1], }, // 20
-        { pos: [-1, -1,  1], norm: [ 0, -1,  0], uv: [1, 1], }, // 21
-        { pos: [ 1, -1, -1], norm: [ 0, -1,  0], uv: [0, 0], }, // 22
-        { pos: [-1, -1, -1], norm: [ 0, -1,  0], uv: [1, 0], }, // 23
+        { pos: [ 1, -1,  1], norm: [ 0, -1,  0], uv: [0, 1], color: [1.0, 1.0, 0.0], }, // 20
+        { pos: [-1, -1,  1], norm: [ 0, -1,  0], uv: [1, 1], color: [0.7, 0.0, 1.0], }, // 21
+        { pos: [ 1, -1, -1], norm: [ 0, -1,  0], uv: [0, 0], color: [0.1, 1.0, 0.6], }, // 22
+        { pos: [-1, -1, -1], norm: [ 0, -1,  0], uv: [1, 0], color: [1.0, 1.0, 0.0], }, // 23
     ];
     const numVertices = vertices.length;
     const positionNumComponents = 3;
+    const colorNumComponents = 3;
     const normalNumComponents = 3;
     const uvNumComponents = 2;
     const positions = new Float32Array(numVertices * positionNumComponents);
+    const colors = new Float32Array(numVertices * colorNumComponents);
     const normals = new Float32Array(numVertices * normalNumComponents);
     const uvs = new Float32Array(numVertices * uvNumComponents);
     let posNdx = 0;
+    let clrNdx = 0;
     let nrmNdx = 0;
     let uvNdx = 0;
     for (const vertex of vertices) {
         positions.set(vertex.pos, posNdx);
+        colors.set(vertex.color, clrNdx);
         normals.set(vertex.norm, nrmNdx);
         uvs.set(vertex.uv, uvNdx);
         posNdx += positionNumComponents;
+        clrNdx += colorNumComponents;
         nrmNdx += normalNumComponents;
         uvNdx += uvNumComponents;
     }
@@ -82,6 +108,9 @@ function main() {
     geometry.setAttribute(
         'position',
         new THREE.BufferAttribute(positions, positionNumComponents));
+    geometry.setAttribute(
+        'color',
+        new THREE.BufferAttribute(colors, colorNumComponents));
     geometry.setAttribute(
         'normal',
         new THREE.BufferAttribute(normals, normalNumComponents));
@@ -102,7 +131,16 @@ function main() {
     const texture = loader.load('https://threejsfundamentals.org/threejs/resources/images/star.png');
 
     function makeInstance(geometry, color, x) {
-        const material = new THREE.MeshPhongMaterial({color, map: texture});
+        // const material = new THREE.MeshPhongMaterial();
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                time: { value: 1.0 }
+            },
+            vertexShader: loadedShaders.mandvsText,
+            fragmentShader: loadedShaders.mandfsText,
+            side: THREE.DoubleSide,
+            transparent: true
+        });
 
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
@@ -113,8 +151,8 @@ function main() {
 
     const cubes = [
         makeInstance(geometry, 0x88FF88,  0),
-        makeInstance(geometry, 0x8888FF, -4),
-        makeInstance(geometry, 0xFF8888,  4),
+        // makeInstance(geometry, 0x8888FF, -4),
+        // makeInstance(geometry, 0xFF8888,  4),
     ];
 
     function resizeRendererToDisplaySize(renderer) {
