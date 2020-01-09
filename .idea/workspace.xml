@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44a628c7-4ea6-43b9-96e7-f4eb687c3ab5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/FragShader - Mandelbrot/lib/async.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FragShader - Mandelbrot/lib/async.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThreeMandelbrot/example.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThreeMandelbrot/example1.html" beforeDir="false" afterPath="$PROJECT_DIR$/ThreeMandelbrot/template.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThreeMandelbrot/example3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThreeMandelbrot/example4.html" beforeDir="false" afterPath="$PROJECT_DIR$/ThreeMandelbrot/three_mandel.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,39 +20,33 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Fractal/index.html">
+        <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/template.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Fractal/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="43" column="36" lean-forward="true" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+            <state relative-caret-position="-1024">
+              <caret line="49" column="38" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
               <folding>
-                <element signature="n#!!block;n#AddEvent#0" />
-                <element signature="n#!!block;n#RemoveEvent#0" />
+                <element signature="e#994#1041#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Fractal/sponge.glsl">
+        <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example5.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="40" column="41" lean-forward="true" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+            <state relative-caret-position="-2685">
+              <caret line="26" column="21" lean-forward="true" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/FragShader - Mandelbrot/lib/async.js">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/three_mandel.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -78,7 +75,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/FragShader - Mandelbrot/index.html" />
         <option value="$PROJECT_DIR$/FragShader - Mandelbrot/app.js" />
         <option value="$PROJECT_DIR$/Mandelbrot ThreeJS/mandelbrot.html" />
         <option value="$PROJECT_DIR$/Mandelbrot ThreeJS/mandelbrot3.html" />
@@ -103,6 +99,7 @@
         <option value="$PROJECT_DIR$/Fractal/pseudoKleinian.glsl" />
         <option value="$PROJECT_DIR$/Fractal/index.html" />
         <option value="$PROJECT_DIR$/Fractal/app.js" />
+        <option value="$PROJECT_DIR$/FragShader - Mandelbrot/index.html" />
       </list>
     </option>
   </component>
@@ -133,7 +130,12 @@
             <path>
               <item name="IndigoCS-webgl-tutorials" type="b2602c69:ProjectViewProjectNode" />
               <item name="IndigoCS-webgl-tutorials" type="462c0819:PsiDirectoryNode" />
-              <item name="FragShader - Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="ShaderMandelbrot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IndigoCS-webgl-tutorials" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IndigoCS-webgl-tutorials" type="462c0819:PsiDirectoryNode" />
+              <item name="ThreeMandelbrot" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -159,11 +161,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/FragShader - Mandelbrot" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Mandelbrot ThreeJS" />
       <recent name="$PROJECT_DIR$/Mandelbrot ThreeJS/lib" />
       <recent name="$PROJECT_DIR$/Mandelbrot ThreeJS/shader" />
-      <recent name="$PROJECT_DIR$/Mandelbrot ThreeJS/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Fractal/lib" />
@@ -202,15 +204,16 @@
       <workItem from="1578528165209" duration="879000" />
       <workItem from="1578537769814" duration="2213000" />
       <workItem from="1578540717321" duration="5387000" />
-      <workItem from="1578557034143" duration="428000" />
+      <workItem from="1578557034143" duration="976000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42492000" />
+    <option name="totallyTimeSpent" value="43138000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="227" y="23" width="1315" height="898" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20502749" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -255,55 +258,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/lib/async.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/lib/async.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/lib/async.min.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/lib/async.min.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/lib/three.r81.min.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/lib/three.r81.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
           <caret line="600" column="29" selection-start-line="600" selection-start-column="29" selection-end-line="600" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/lib/stats.module.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/lib/stats.module.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2720">
           <caret line="170" column="21" selection-start-line="170" selection-start-column="21" selection-end-line="170" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/main.css">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1376">
           <caret line="86" column="1" selection-start-line="86" selection-start-column="1" selection-end-line="86" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/index.html">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/shader/mand.fs.glsl">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/shader/mand.fs.glsl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/shader/mand.vs.glsl">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/shader/mand.vs.glsl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/js/buffer.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/js/buffer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="117" column="13" lean-forward="true" selection-start-line="117" selection-start-column="13" selection-end-line="117" selection-end-column="13" />
@@ -313,67 +316,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/lib/three.module.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/lib/three.module.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="434">
           <caret line="49963" lean-forward="true" selection-start-line="49963" selection-end-line="49963" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/lib/OrbitControls.js">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/lib/OrbitControls.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="19" column="14" lean-forward="true" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/index1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="46" column="29" lean-forward="true" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/mandelbrot.html">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/mandelbrot.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2962">
           <caret line="280" column="42" selection-start-line="280" selection-start-column="28" selection-end-line="280" selection-end-column="42" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/example1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="39" column="14" lean-forward="true" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
-          <folding>
-            <element signature="e#994#1041#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/example3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/example4.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1424">
-          <caret line="89" column="9" lean-forward="true" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FragShader - Mandelbrot/mandl.fs.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FragShader - Mandelbrot/mandl.vs.glsl">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/01 - Simple Triangle/index.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -400,20 +362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="48" column="29" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FragShader - Mandelbrot/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FragShader - Mandelbrot/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-382">
-          <caret line="125" column="15" selection-start-line="125" selection-start-column="15" selection-end-line="125" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -452,27 +400,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/sponge.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2076">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/example5.html">
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example5.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3342">
           <caret line="26" column="21" lean-forward="true" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mandelbrot ThreeJS/example.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="90" column="58" lean-forward="true" selection-start-line="90" selection-start-column="58" selection-end-line="90" selection-end-column="58" />
-          <folding>
-            <element signature="e#1299#1346#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -486,18 +417,93 @@
     <entry file="file://$PROJECT_DIR$/Fractal/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Fractal/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="45" column="33" lean-forward="true" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
+        <state relative-caret-position="400">
+          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
           <folding>
             <element signature="n#!!block;n#AddEvent#0" />
             <element signature="n#!!block;n#RemoveEvent#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/sponge.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShaderMandelbrot/lib/async.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShaderMandelbrot/mandl.fs.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShaderMandelbrot/mandl.vs.glsl">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShaderMandelbrot/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShaderMandelbrot/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1512">
+          <caret line="125" column="15" selection-start-line="125" selection-start-column="15" selection-end-line="125" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/index1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1104">
+          <caret line="69" column="47" lean-forward="true" selection-start-line="69" selection-start-column="47" selection-end-line="69" selection-end-column="47" />
+          <folding>
+            <element signature="e#1299#1346#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example4.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="181" column="41" lean-forward="true" selection-start-line="181" selection-start-column="41" selection-end-line="181" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="49" column="38" lean-forward="true" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
+          <folding>
+            <element signature="e#994#1041#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="37" column="32" lean-forward="true" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
         </state>
       </provider>
     </entry>
