@@ -11,7 +11,7 @@ uniform int   AA;
 #define MAX_TRACE_DIST   10.0
 #define PRECISION        1e-4
 #define PI               3.14159265358979323
-#define T                (iTime * 0.001)
+#define T                (iTime * 0.005)
 #define MAX_AA           10
 
 // magic constants

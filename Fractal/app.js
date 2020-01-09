@@ -169,7 +169,8 @@ function RunDemo(loadErrors, loadedShaders) {
 		gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 
 		gl.uniform2fv(uniforms.iResolution, iResolution);
-		iTime = performance.now() - start_time;
+		// 换算成秒
+		iTime = parseInt((performance.now() - start_time)/1000);
 		gl.uniform1f(uniforms.iTime, iTime);
 		gl.uniform1i(uniforms.AA, AA);
 
