@@ -40,8 +40,8 @@ function RemoveEvent(object, type, callback) {
 function Init() {
 	async.map({
 		vsText: '/mandl.vs.glsl',
-		// fsText: '/sponge.glsl'
-		fsText:'pseudoKleinian.glsl'
+		fsText: '/sponge.glsl'
+		// fsText:'pseudoKleinian.glsl'
 		// fsText: '/mandl.fs.glsl'
 	}, loadShaderAsync, RunDemo);
 }
