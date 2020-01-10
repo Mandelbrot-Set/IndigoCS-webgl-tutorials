@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44a628c7-4ea6-43b9-96e7-f4eb687c3ab5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fractal/fishSwim.glsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fractal/gear.glsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fractal/shader/guil/Mandelflow2.glsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Fractal/shader/guil/Mandelflow3.glsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fractal/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Fractal/app.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -15,11 +20,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Fractal/shader/guil/Mandelflow3.glsl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16">
-              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+            <state relative-caret-position="416">
+              <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Fractal/shader/guil/Mandelflow2.glsl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="319">
+              <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Fractal/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="48" column="35" lean-forward="true" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+              <folding>
+                <element signature="n#!!block;n#AddEvent#0" />
+                <element signature="n#!!block;n#RemoveEvent#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,9 +67,19 @@
     <findStrings>
       <find>vpDimensions</find>
       <find>iResolution</find>
-      <find>iTime</find>
       <find>T</find>
+      <find>GearShadow</find>
+      <find>DrawGear</find>
+      <find>count</find>
+      <find>fragCoord</find>
+      <find>iTime</find>
+      <find>fragColor</find>
+      <find>csqr</find>
     </findStrings>
+    <replaceStrings>
+      <replace>gl_FragCoord</replace>
+      <replace>gl_FragColor</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,9 +110,13 @@
         <option value="$PROJECT_DIR$/Fractal/spong.glsl" />
         <option value="$PROJECT_DIR$/Fractal/pseudoKleinian.glsl" />
         <option value="$PROJECT_DIR$/Fractal/index.html" />
-        <option value="$PROJECT_DIR$/Fractal/app.js" />
         <option value="$PROJECT_DIR$/FragShader - Mandelbrot/index.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Fractal/gear.glsl" />
+        <option value="$PROJECT_DIR$/Fractal/fishSwim.glsl" />
+        <option value="$PROJECT_DIR$/Fractal/shader/guil/Mandelflow3.glsl" />
+        <option value="$PROJECT_DIR$/Fractal/app.js" />
+        <option value="$PROJECT_DIR$/Fractal/shader/guil/Mandelflow2.glsl" />
       </list>
     </option>
   </component>
@@ -86,16 +127,17 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="290" />
-    <option name="y" value="34" />
-    <option name="width" value="1315" />
-    <option name="height" value="898" />
+    <option name="x" value="344" />
+    <option name="y" value="43" />
+    <option name="width" value="1152" />
+    <option name="height" value="826" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -103,11 +145,28 @@
               <item name="IndigoCS-webgl-tutorials" type="b2602c69:ProjectViewProjectNode" />
               <item name="IndigoCS-webgl-tutorials" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="IndigoCS-webgl-tutorials" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IndigoCS-webgl-tutorials" type="462c0819:PsiDirectoryNode" />
+              <item name="Fractal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IndigoCS-webgl-tutorials" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IndigoCS-webgl-tutorials" type="462c0819:PsiDirectoryNode" />
+              <item name="Fractal" type="462c0819:PsiDirectoryNode" />
+              <item name="shader" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IndigoCS-webgl-tutorials" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IndigoCS-webgl-tutorials" type="462c0819:PsiDirectoryNode" />
+              <item name="Fractal" type="462c0819:PsiDirectoryNode" />
+              <item name="shader" type="462c0819:PsiDirectoryNode" />
+              <item name="guil" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -170,18 +229,19 @@
       <workItem from="1578528165209" duration="879000" />
       <workItem from="1578537769814" duration="2213000" />
       <workItem from="1578540717321" duration="5387000" />
-      <workItem from="1578557034143" duration="1127000" />
+      <workItem from="1578557034143" duration="1539000" />
+      <workItem from="1578613647367" duration="6461000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43376000" />
+    <option name="totallyTimeSpent" value="50249000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="290" y="34" width="1315" height="898" extended-state="0" />
+    <frame x="344" y="43" width="1152" height="826" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20502749" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23873875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -193,7 +253,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.24521072" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.17299578" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -324,56 +384,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/mandl.vs.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/pseudoKleinian.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/mandl.fs.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Fractal/shader_toy_spong.glsl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1697">
           <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-          <folding>
-            <element signature="n#!!block;n#AddEvent#0" />
-            <element signature="n#!!block;n#RemoveEvent#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fractal/sponge.glsl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -404,16 +418,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1104">
-          <caret line="69" column="47" lean-forward="true" selection-start-line="69" selection-start-column="47" selection-end-line="69" selection-end-column="47" />
-          <folding>
-            <element signature="e#1299#1346#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example.html" />
     <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/template.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1024">
@@ -424,13 +429,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1613">
-          <caret line="37" column="32" lean-forward="true" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/example3.html" />
     <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/three_mandel3.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2685">
@@ -445,13 +444,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/index.html" />
     <entry file="file://$PROJECT_DIR$/ThreeMandelbrot/index1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -468,8 +461,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        <state relative-caret-position="32">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/mandl.vs.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/sponge.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2172">
+          <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/fishSwim.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3479">
+          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/gear.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/mandl.fs.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/pseudoKleinian.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-50">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/shader/guil/Mandelflow3.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="48" column="35" lean-forward="true" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!block;n#AddEvent#0" />
+            <element signature="n#!!block;n#RemoveEvent#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fractal/shader/guil/Mandelflow2.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
         </state>
       </provider>
     </entry>
