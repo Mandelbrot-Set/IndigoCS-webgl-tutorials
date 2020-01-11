@@ -293,8 +293,6 @@ void main()
         col = rgb*brdf*exp(-0.2*t);
     }
 
-
-
     col = pow( col, vec3(0.4) ) * 1.2;
 
     col *= sqrt( 16.0*q.x*q.y*(1.0-q.x)*(1.0-q.y) );
