@@ -46,7 +46,8 @@ function Init() {
 		// fsText:'/fishSwim.glsl'
 		// fsText: '/shader/guil/Mandelflow3.glsl'
 		// fsText: '/shader/guil/Mandelflow2.glsl'
-		fsText: '/shader/guil/Mandeltree.glsl'
+		// fsText: '/shader/guil/Mandeltree.glsl'
+		fsText: '/shader/iq/orbit_traps.glsl'
 		// fsText: '/mandl.fs.glsl'
 	}, loadShaderAsync, RunDemo);
 }
