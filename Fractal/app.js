@@ -47,7 +47,8 @@ function Init() {
 		// fsText: '/shader/guil/Mandelflow3.glsl'
 		// fsText: '/shader/guil/Mandelflow2.glsl'
 		// fsText: '/shader/guil/Mandeltree.glsl'
-		fsText: '/shader/iq/orbit_traps.glsl'
+		// fsText: '/shader/iq/orbit_traps.glsl'
+		fsText: '/shader/iq/julia/julia.glsl'
 		// fsText: '/mandl.fs.glsl'
 	}, loadShaderAsync, RunDemo);
 }

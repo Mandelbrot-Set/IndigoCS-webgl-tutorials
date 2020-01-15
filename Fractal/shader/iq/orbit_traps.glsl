@@ -21,7 +21,7 @@ void main()
     for( int m=0; m<MAX_AA; m++ )
     for( int n=0; n<MAX_AA; n++ )
     {
-        vec2 p = (2.0*(gl_FragCoord.xy + vec2(float(m),float(n))/float(AA))-iResolution.xy) / iResolution.y;
+        vec2 p = (2.0*(gl_FragCoord.xy + vec2(float(m),float(n))/float(MAX_AA))-iResolution.xy) / iResolution.y;
 
         float zoo = 1.0/(400.0 - 150.0*sin(0.15*iTime-0.3));
 
